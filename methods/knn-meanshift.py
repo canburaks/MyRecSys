@@ -18,8 +18,8 @@ media_folder = "/home/jb/Projects/Github/RecommenderSystem/media"
 save_to = media_folder + "/clustering.html"
 
 #MOVIE-TAG DATAFRAME
-mtf_path = "/home/jb/Projects/Github/RecommenderSystem/data/dataframes/movie_tag_full_frame.pickle"
-mt_full = pickson.get_pickle(mtf_path)
+mt_full = pd.read_csv("/home/jb/Projects/Github/MyRecSys/movielens/filtered-data/filtered_tags1_score.csv")
+
 
 ###########################################################################
 # REDUCE DIMENSIONS

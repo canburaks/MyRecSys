@@ -179,4 +179,4 @@ table= pd.pivot_table(merged, values="relevance", index=["movie_id", "name"], co
 
 
 ndf = pd.merge(filtered_movie_df[["movie_id","name", "year"]], table, on="movie_id", how="inner" )
-ndf.to_csv("/home/jb/Projects/Github/MyRecSys/movielens/filtered-data/filtered_tags1_score.csv")
+ndf.to_csv("/home/jb/Projects/Github/MyRecSys/movielens/filtered-data/filtered_tags1_score.csv", index=False)

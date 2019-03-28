@@ -12,8 +12,8 @@ pd.set_option('display.max_columns', 800)
 pd.set_option('display.max_rows', 800)
 
 #MOVIE-TAG DATAFRAME
-mtf_path = "/home/jb/Projects/Github/RecommenderSystem/data/dataframes/movie_tag_full_frame.pickle"
-mt_full = pickson.get_pickle(mtf_path)
+mtf_path = "/home/jb/Projects/Github/MyRecSys/movielens/filtered-data/filtered_tags1_score.csv"
+mt_full = pd.read_csv(mtf_path)
 
 def sample(sample_size=None):
     if sample_size==None:
@@ -34,12 +34,12 @@ def pca_reduction(features, componens_num, svd_solver="auto"):
     finalDf = pd.concat([mt_full["movie_id"], mt_full["name"], principalDf], axis=1)
     return finalDf
 
-result = pca_reduction(data,3)
+result = pca_reduction(data,2)
 
 
 
 #SAVE AS EXCEL FILE
-result.to_excel("/home/jb/Projects/Github/RecommenderSystem/data/processed/pc10_df.xlsx", sheet_name="PC10", index=False)
+result.to_excel("/home/jb/Projects/Github/MyRecSys/data/principal-components/pc2_df.xlsx", sheet_name="PC2", index=False)
 
 
 #GET SAMPLE OF 2D AND 3D
