@@ -14,7 +14,7 @@ pd.set_option('display.max_rows', 800)
 #MOVIE-TAG DATAFRAME
 mtf_path = "/home/jb/Projects/Github/MyRecSys/movielens/filtered-data/filtered_tags1_score.csv"
 mt_full = pd.read_csv(mtf_path)
-
+mt_full
 def sample(sample_size=None):
     if sample_size==None:
         features = mt_full.iloc[:, 2:].values
@@ -29,8 +29,7 @@ def pca_reduction(features, componens_num, svd_solver="auto"):
     pca = PCA(n_components=componens_num, svd_solver=svd_solver)
     #TRANSFORM
     p_components = pca.fit_transform(features)
-    principalDf = pd.DataFrame(data=p_components,
-                               columns=["PC" + str(x+1) for x in range(componens_num)])
+    principalDf = pd.DataFrame(data=p_components, columns=["PC" + str(x+1) for x in range(componens_num)])
     finalDf = pd.concat([mt_full["movie_id"], mt_full["name"], principalDf], axis=1)
     return finalDf
 

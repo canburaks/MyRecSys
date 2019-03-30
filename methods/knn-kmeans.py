@@ -19,16 +19,17 @@ media_folder = "/home/jb/Projects/Github/RecommenderSystem/media"
 save_to = media_folder + "/clustering.html"
 
 #MOVIE-TAG DATAFRAME
-mt_full = pd.read_csv("/home/jb/Projects/Github/MyRecSys/movielens/filtered-data/filtered_tags1_score.csv")
-
+#mt_full = pd.read_csv("/home/jb/Projects/Github/MyRecSys/movielens/filtered-data/filtered_tags1_score.csv")
+#imdb250
+mt_full = pd.read_csv("/home/jb/Projects/Github/movielens/filtered-data/filtered_tags_imdb250_score.csv")
+mt_full.to_excel("/home/jb/Projects/Github/movielens/filtered-data/filtered_tags_imdb250_score.xlsx", index=False)
 # REDUCE DIMENSIONS
 
-
-def sample(sample_size=None):
+def sample(sample_size=None, multiply=1):
     if sample_size == None:
-        features = mt_full.iloc[:, 2:].values
+        features = mt_full.iloc[:, 2:].values*multiply
     else:
-        features = mt_full.iloc[:sample_size, 2:].values
+        features = mt_full.iloc[:sample_size, 2:].values*multiply
     #return sampled data values
     return StandardScaler().fit_transform(features)
 
@@ -62,7 +63,7 @@ def get_color(id):
 def elements2d(movie, label, text=None):
     return go.Scatter(x=[movie[0]], y=[movie[1]],
                       mode="markers",
-                      name=str(labels_unique[label]),
+                      name=text,
                       text=text,
                       marker=dict(size=12,
                                   color=get_color((360/cluster_number)*label),
@@ -73,15 +74,15 @@ def elements2d(movie, label, text=None):
 def elements3d(movie, label, text=None):
     return go.Scatter3d(x=[movie[0]], y=[movie[1]], z=[movie[2]],
                       mode="markers",
-                      name=str(labels_unique[label]),
+                      name=text,
                       text=text,
                       marker=dict(size=12,
                                   color=get_color((360/cluster_number)*label),
                                   symbol="circle",
                                   line={"width": 2}))
 
-def make_graph(sample_size, cluster_number, dim):
-    data = sample()
+def make_graph(sample_size, cluster_number, dim, multiply=1):
+    data = sample(multiply=multiply)
     result = pca_reduction(data, dim)
     #KNN PART - KMEANS
     classifying_data = take_sample(result, 1000).iloc[:, 2:].values
@@ -116,7 +117,8 @@ def make_graph(sample_size, cluster_number, dim):
     pyo.plot(fig, filename=save_to)
 
 
-make_graph(1000, 10, 3)
+cluster_number = 10
+make_graph(13000, cluster_number, 2,10)
 
 
 """
